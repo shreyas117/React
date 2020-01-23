@@ -7,7 +7,6 @@ class DishDetail extends Component{
         super(props);
 
         this.state = {
-
         }
     }
 

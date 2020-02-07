@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Navbar,NavbarBrand } from 'reactstrap';
 import Menu from './MenuComponent.js';
+import Home from './HomeComponent';
 import DishDetail from './DishDetailComponent';
 import DISHES from '../shared/dishes';
+import PROMOTIONS from '../shared/promotions';
+import LEADERS from '../shared/leaders';
+import Header from './HeaderComponent.js';
+import Footer from './FooterComponent.js';
+import { Switch , Route , Redirect } from 'react-router-dom'; 
 
 class Main extends Component {
 
@@ -12,26 +18,40 @@ class Main extends Component {
 
     this.state = {
       dishes : DISHES,
-      selectedDish : null
+      promotions : PROMOTIONS,
+      leaders : LEADERS
+      // selectedDish : null
     };
   }
 
-  onDishSelect(dish){
-    this.setState({selectedDish : dish});
-}
+//   onDishSelect(dish){
+//     this.setState({selectedDish : dish});
+// }
+
 
     render(){
-    return (
-    <div>
-    {/* <div className="App"> */}
-      <Navbar dark color="primary">
-        <div className="container">
-          <NavbarBrand href="/">Restaurant</NavbarBrand>
+
+    const HomePage = () => {
+      return (
+        <div>
+          <Home dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+               promo={this.state.promotions.filter((promo) => promo.featured)[0]} 
+               lead={this.state.leaders.filter((lead) => lead.featured)[0]}/>
         </div>
-      </Navbar>
-      <Menu dishes={this.state.dishes} handleClick={(dishId) => this.onDishSelect(dishId)} />
-      <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
-    </div>
+      );
+    }
+    return(
+      <React.Fragment>
+      <Header />
+      <Switch>
+        <Route path = "/home" component={HomePage} />
+        <Route exact path = "/menu" component={() => <Menu dishes = {this.state.dishes} />  } />
+        <Redirect to = "/home" /> 
+      </Switch>
+      {/* <Menu dishes={this.state.dishes} handleClick={(dishId) => this.onDishSelect(dishId)} />
+      <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} /> */}
+      <Footer />
+      </React.Fragment>
   );}
 }
 

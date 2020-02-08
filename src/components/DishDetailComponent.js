@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function RenderDish({dish}){
     if(dish == null){
@@ -8,6 +9,12 @@ function RenderDish({dish}){
         );
     }
     return(
+        <div>
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+            </Breadcrumb>
         <Card>
         <CardImg top width="40%" height="40%" src={dish.image} alt={dish.name} />
         <CardBody>
@@ -15,6 +22,7 @@ function RenderDish({dish}){
             <CardText>{dish.description}</CardText>
         </CardBody>
     </Card>
+    </div>
     );
 }
 
